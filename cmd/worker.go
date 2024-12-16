@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
@@ -20,7 +21,7 @@ func main() {
 		// リクエストヘッダをログに出力
 		for name, values := range c.Request().Header {
 			for _, v := range values {
-				c.Logger().Info(fmt.Sprintf("%s: %s", name, v))
+				log.Printf(fmt.Sprintf("%s: %s", name, v))
 			}
 		}
 
@@ -30,7 +31,7 @@ func main() {
 			c.Logger().Error("Error reading body: %v", err)
 			return c.String(http.StatusInternalServerError, "Failed to read body")
 		}
-		c.Logger().Info(fmt.Sprintf("Request Body: %s", string(bodyBytes)))
+		log.Printf(fmt.Sprintf("Request Body: %s", string(bodyBytes)))
 
 		// 単純に200を返す
 		return c.String(http.StatusOK, "OK")
